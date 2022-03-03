@@ -127,7 +127,7 @@ export default class SignUp extends Component<Props, State> {
     };
 
     const renderNextButton = () => {
-      if (formStep == 1) {
+      if (formStep === 1) {
         return <button type="button" onClick={this.handleStep} className="btn narrow" >Next</button>;
       } else {
         return <button type="submit" className="btn narrow">Sign Up</button>;
@@ -135,7 +135,7 @@ export default class SignUp extends Component<Props, State> {
     }
 
     const renderFields = () => {
-      if (formStep == 1) {
+      if (formStep === 1) {
         return (
           <>
             <div className="form-group">
