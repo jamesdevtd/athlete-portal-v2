@@ -5,7 +5,9 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 import IUser from './types/user.type';
 import Login from "./forms/login.component";
+import AffiliateLogin from "./forms/affiliate.login.component";
 import SignUp from "./forms/signup.component";
+import AffiliateSignUp from "./forms/affiliate.signup.component";
 import TempShowProfile from "./components/profile.component";
 import DashBoardUser from "./components/dashboard-user.component";
 import DashBoardManager from "./components/dashboard-manager.component";
@@ -16,7 +18,7 @@ import EventBus from "./common/EventBus";
 type Props = {};
 
 type State = {
-  showModeratorBoard: boolean,
+  showManagerBoard: boolean,
   showAdminBoard: boolean,
   currentUser: IUser | undefined
 }
@@ -27,7 +29,7 @@ class App extends Component<Props, State> {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
+      showManagerBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
     };
@@ -39,7 +41,7 @@ class App extends Component<Props, State> {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showManagerBoard: user.roles.includes("ROLE_MANAGER"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
@@ -54,24 +56,24 @@ class App extends Component<Props, State> {
   logOut() {
     AuthService.logout();
     this.setState({
-      showModeratorBoard: false,
+      showManagerBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
     });
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showManagerBoard, showAdminBoard } = this.state;
 
     return (
       <div>
         <nav className="temp-navbar hidden">
           <ul className="mr-auto flex list-none">
 
-            {showModeratorBoard && (
+            {showManagerBoard && (
               <li>
                 <Link to={"/mod"} className="no-underline">
-                  Moderator Board
+                  Manager Board
                 </Link>
               </li>
             )}
@@ -126,6 +128,8 @@ class App extends Component<Props, State> {
         <div className="page">
           <Switch>
             <Route exact path="/" component={Login} />
+            <Route exact path="/affiliatesignup" component={AffiliateSignUp} />
+            <Route exact path="/affiliatelogin" component={AffiliateLogin} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/profile" component={TempShowProfile} />
             <Route path="/user" component={DashBoardUser} />
