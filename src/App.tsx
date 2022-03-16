@@ -4,14 +4,14 @@ import "./App.css";
 
 import AuthService from "./services/auth.service";
 import IUser from './types/user.type';
-import Login from "./forms/login.component";
-import AffiliateLogin from "./forms/affiliate.login.component";
-import SignUp from "./forms/signup.component";
-import AffiliateSignUp from "./forms/affiliate.signup.component";
+import Login from "./forms/Login";
+import SignUp from "./forms/SignUp";
+import AffiliateLogin from "./forms/affiliate/AffiliateLogin";
+import AffiliateSignUp from "./forms/affiliate/AffiliateSignUp";
 import TempShowProfile from "./components/profile.component";
-import DashBoardUser from "./components/dashboard-user.component";
-import DashBoardManager from "./components/dashboard-manager.component";
-import DashBoardAdmin from "./components/dashboard-admin.component";
+import DashBoardUser from "./components/dashboards/UserDashBoard";
+import DashBoardManager from "./components/dashboards/ManagerDashboard";
+import DashBoardAdmin from "./components/dashboards/AdminDashboard";
 
 import EventBus from "./common/EventBus";
 
@@ -138,7 +138,7 @@ class App extends Component<Props, State> {
           </Switch>
         </div>
 
-      </div>
+      </div >
     );
   }
 }

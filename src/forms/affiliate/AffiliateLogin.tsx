@@ -3,9 +3,9 @@ import { RouteComponentProps, Link } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { ReactComponent as TagxLogo } from "../components/svgs/tagx-logo.svg";
+import { ReactComponent as TagxLogo } from "../../components/svgs/tagx-logo.svg";
 
-import AuthService from "../services/auth.service";
+import AuthService from "../../services/auth.service";
 
 interface RouterProps {
   history: string;
@@ -110,12 +110,12 @@ export default class Login extends Component<Props, State> {
             <div className="forms-nav">
               <ul className="text-center list-style-none">
                 <li className="active">
-                  <Link to={"/affiliate-login"}>
+                  <Link to={"/affiliatelogin"}>
                     Log in
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/affiliate-signup"}>
+                  <Link to={"/affiliatesignup"}>
                     Sign Up
                   </Link>
                 </li>
@@ -172,7 +172,7 @@ export default class Login extends Component<Props, State> {
 
             <div className="text-center text-gray-600">
               <p>Don’t have an account? &nbsp;
-                <Link to={"/affiliate-signup"} className="anchor">
+                <Link to={"/affiliatesignup"} className="anchor">
                   Sign Up
                 </Link>
               </p>

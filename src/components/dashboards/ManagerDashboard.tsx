@@ -1,7 +1,7 @@
 import { Component } from "react";
 
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
+import UserService from "../../services/user.service";
+import EventBus from "../../common/EventBus";
 
 type Props = {};
 
@@ -9,7 +9,7 @@ type State = {
   content: string;
 }
 
-export default class DashBoardUser extends Component<Props, State> {
+export default class DashBoardAdmin extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -19,7 +19,7 @@ export default class DashBoardUser extends Component<Props, State> {
   }
 
   componentDidMount() {
-    UserService.getUserDashBoard().then(
+    UserService.getManagerBoard().then(
       response => {
         this.setState({
           content: response.data
