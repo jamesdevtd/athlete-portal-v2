@@ -1,0 +1,7 @@
+.bottom-buttons {
+  @apply place-items-center;
+}
+
+.bottom-buttons button {
+  min-width: 122px;
+}

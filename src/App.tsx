@@ -1,146 +1,104 @@
-import { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
-import AuthService from "./services/auth.service";
-import IUser from './types/user.type';
-import Login from "./forms/Login";
-import SignUp from "./forms/SignUp";
+import * as AuthService from "./services/auth.service";
+// import IUser from './types/user.type';
+
 import AffiliateLogin from "./forms/affiliate/AffiliateLogin";
 import AffiliateSignUp from "./forms/affiliate/AffiliateSignUp";
-import TempShowProfile from "./components/profile.component";
-import DashBoardUser from "./components/dashboards/UserDashBoard";
-import DashBoardManager from "./components/dashboards/ManagerDashboard";
-import DashBoardAdmin from "./components/dashboards/AdminDashboard";
+import TempShowProfile from "./components/Profile";
 
-import EventBus from "./common/EventBus";
+import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector,  } from 'react-redux';
+import { actionCreators } from './store';
+import { RootState } from './store/reducers';
 
-type Props = {};
+const App = () => {
+  const [showAffiliateBoard, setShowAffiliateBoard] = useState<boolean>(false);
 
-type State = {
-  showManagerBoard: boolean,
-  showAdminBoard: boolean,
-  currentUser: IUser | undefined
-}
+  const currentUser = useSelector((state: RootState) => state.currentUser)
+  const dispatch = useDispatch();
+  const { signOut } = bindActionCreators(actionCreators, dispatch);
 
-class App extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.logOut = this.logOut.bind(this);
+  useEffect(() => {
 
-    this.state = {
-      showManagerBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
-    };
-  }
-
-  componentDidMount() {
-    const user = AuthService.getCurrentUser();
-
-    if (user) {
-      this.setState({
-        currentUser: user,
-        showManagerBoard: user.roles.includes("ROLE_MANAGER"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-      });
+    if (currentUser) {
+      console.log('current user logged in: ' + currentUser)
+      // setShowAffiliateBoard(user.roles.includes("ROLE_AFFILIATE"));
+      setShowAffiliateBoard(true);
     }
 
-    EventBus.on("logout", this.logOut);
-  }
+  }, [currentUser]);
 
-  componentWillUnmount() {
-    EventBus.remove("logout", this.logOut);
-  }
-
-  logOut() {
+  const handleSignOut = () => {
     AuthService.logout();
-    this.setState({
-      showManagerBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
-    });
-  }
+    signOut()
+    setShowAffiliateBoard(false);
+  };
 
-  render() {
-    const { currentUser, showManagerBoard, showAdminBoard } = this.state;
+  return (
+    <div>
+      <nav className="temp-navbar hidden">
+        <ul className="mr-auto flex list-none">
 
-    return (
-      <div>
-        <nav className="temp-navbar hidden">
-          <ul className="mr-auto flex list-none">
-
-            {showManagerBoard && (
-              <li>
-                <Link to={"/mod"} className="no-underline">
-                  Manager Board
-                </Link>
-              </li>
-            )}
-
-            {showAdminBoard && (
-              <li>
-                <Link to={"/admin"} className="no-underline">
-                  Admin Board
-                </Link>
-              </li>
-            )}
-
-            {currentUser && (
-              <li>
-                <Link to={"/user"} className="no-underline">
-                  User
-                </Link>
-              </li>
-            )}
-          </ul>
-
-          {currentUser ? (
-            <ul className="ml-auto flex list-none gap-3">
-              <li>
-                <Link to={"/profile"} className="no-underline">
-                  {currentUser.username}
-                </Link>
-              </li>
-              <li>
-                <a href="/" className="no-underline" onClick={this.logOut}>
-                  LogOut
-                </a>
-              </li>
-            </ul>
-          ) : (
-            <ul className="ml-auto flex list-none gap-3">
-              <li>
-                <Link to={"/"} className="no-underline">
-                  Login
-                </Link>
-              </li>
-
-              <li>
-                <Link to={"/signup"} className="no-underline">
-                  Sign Up
-                </Link>
-              </li>
-            </ul>
+          {showAffiliateBoard && (
+            <li>
+              <Link to={"/admin-portal/affiliate"} className="no-underline">
+                Affiliate Board
+              </Link>
+            </li>
           )}
-        </nav>
 
-        <div className="page">
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/affiliatesignup" component={AffiliateSignUp} />
-            <Route exact path="/affiliatelogin" component={AffiliateLogin} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/profile" component={TempShowProfile} />
-            <Route path="/user" component={DashBoardUser} />
-            <Route path="/mod" component={DashBoardManager} />
-            <Route path="/admin" component={DashBoardAdmin} />
-          </Switch>
-        </div>
+          {currentUser && (
+            <li>
+              <Link to={"/admin-portal/profile"} className="no-underline">
+                TEMP: Show User Profile
+              </Link>
+            </li>
+          )}
+        </ul>
 
-      </div >
-    );
-  }
-}
+        {currentUser ? (
+          <ul className="ml-auto flex list-none gap-3">
+            <li>
+              <Link to={"/admin-portal/profile"} className="no-underline">
+                {currentUser.email}
+              </Link>
+            </li>
+            <li>
+              <a href="/admin-portal/" className="no-underline" onClick={handleSignOut}>
+                LogOut
+              </a>
+            </li>
+          </ul>
+        ) : (
+          <ul className="ml-auto flex list-none gap-3">
+            <li>
+              <Link to={"/admin-portal/"} className="no-underline">
+                Login
+              </Link>
+            </li>
+
+            <li>
+              <Link to={"/admin-portal/signup"} className="no-underline">
+                Sign Up
+              </Link>
+            </li>
+          </ul>
+        )}
+      </nav>
+
+      <div className="page">
+        <Routes>
+          <Route path="/admin-portal" element={<AffiliateLogin />} />
+          <Route path="/admin-portal/signup" element={<AffiliateSignUp />} />
+          <Route path="/admin-portal/profile" element={<TempShowProfile />} />
+        </Routes>
+      </div>
+
+    </div >
+  );
+};
 
 export default App;

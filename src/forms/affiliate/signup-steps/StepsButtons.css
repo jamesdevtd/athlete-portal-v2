@@ -1,0 +1,45 @@
+.StepsButtons {
+  @apply flex flex-row flex-nowrap
+    content-center items-center gap-2;
+}
+
+.StepsButtons button {
+  display: block;
+  align-self: center;
+}
+
+.StepsButtons button:not(.arrow) {
+  @apply w-auto flex-grow gap-1;
+  @apply py-1 px-1 m-auto;
+  background: #9CA5B4;
+  text-indent: -9999px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.StepsButtons button:not(.arrow).filled {
+  @apply bg-blue-brand;
+}
+
+button.arrow {
+  background-color:transparent;
+  text-indent: -9999px;
+  height: 15px;
+  width: 40px;
+  display: block;
+  background-image: url(../../../assets/backgrounds/fat-chevron.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+button.arrow.prev {
+  transform: scaleX(-1);
+}
+
+button.arrow:disabled {
+  opacity: .4;
+}
+
+a.setup-payout {
+  max-width: 300px;
+}

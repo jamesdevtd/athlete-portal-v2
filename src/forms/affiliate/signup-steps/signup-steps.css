@@ -1,0 +1,115 @@
+.form-wrap {
+  max-width: 260px;
+}
+
+.forms-nav ul {
+  @apply flex justify-center gap-3 border-b-2;
+}
+
+.forms-nav ul li {
+  @apply block uppercase opacity-50 px-1 pb-1 relative font-title;
+}
+
+.forms-nav ul li.active {
+  @apply opacity-100 text-blue-dark font-bold;
+}
+
+.forms-nav ul li.active:after {
+  content: "";
+  @apply block w-full bg-blue-dark absolute left-0 bottom-0;
+  height: 4px;
+  border-radius: 3px 3px 0 0;
+}
+
+.forms-nav a {
+  @apply font-semibold;
+}
+
+.form-group {
+  @apply flex flex-col gap-2;
+}
+
+.form-group label {
+  @apply text-gray-600 text-xs m-0;
+}
+
+.form-group label > span {
+  @apply text-orange-500;
+}
+
+.form-group input {
+  @apply rounded-sm focus:outline-none focus:border-none focus:ring-1 focus:border-blue-900 text-sm p-2;
+}
+
+.form-group .alert {
+  @apply text-xs text-orange-500;
+}
+
+.form-group.pw {
+  @apply relative;
+}
+
+.pw-toggle {
+  @apply absolute;
+  top: 35px;
+  right: 13px;
+  text-indent: -9999px;
+  font-size: 1px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  /* background-image: url(./assets/svgs/pw-visible.svg); */
+  background-image: url(../../../assets/backgrounds/pw-visible.svg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pw-shown .pw-toggle {
+  /* background-image: url(./assets/svgs/pw-hide.svg); */
+  background-image: url(../../../assets/backgrounds/pw-hide.svg);
+}
+
+.form-group.note {
+  @apply text-gray-600;
+  font-size: 9px;
+}
+
+.form-group.narrow {
+  max-width: 380px;
+  @apply mx-auto w-full;
+}
+
+.in-steps .form-wrap {
+  max-width: 450px;
+}
+
+.instruction {
+  @apply text-blue-dark text-base;
+}
+
+ul.warnings {
+  @apply flex flex-row gap-2 place-items-center justify-center mt-5;
+}
+
+ul.warnings li {
+  @apply block bg-no-repeat bg-contain bg-left font-semibold;
+  line-height: 1.1em;
+  font-size: 11px;
+  padding-left: 13px;
+  padding-right: 10px;
+  background-image: url(../../../assets/backgrounds/circle-warning.svg);
+  background-size: 10px;
+}
+
+.uploader-placeholder {
+  width: 200px;
+  height: 200px;
+  background-image: url(../../../assets/backgrounds/uploader-placeholder.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.uploader-placeholder input {
+  opacity: 0;
+}

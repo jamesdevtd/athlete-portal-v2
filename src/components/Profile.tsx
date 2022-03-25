@@ -1,69 +1,44 @@
-import { Component } from "react";
-import { Redirect } from "react-router-dom";
-import AuthService from "../services/auth.service";
-import IUser from "../types/user.type";
+import { useEffect } from "react";
 
-type Props = {};
+import { useSelector,  } from 'react-redux';
+import { RootState } from '../store/reducers';
 
-type State = {
-  redirect: string | null,
-  userReady: boolean,
-  currentUser: IUser & { accessToken: string }
-}
-export default class Profile extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+const Profile: React.FC = () => {
 
-    this.state = {
-      redirect: null,
-      userReady: false,
-      currentUser: { accessToken: "" }
-    };
-  }
+  const currentUser = useSelector((state: RootState) => state.currentUser)
 
-  componentDidMount() {
-    const currentUser = AuthService.getCurrentUser();
+  useEffect(() => {
 
-    if (!currentUser) this.setState({ redirect: "/home" });
-    this.setState({ currentUser: currentUser, userReady: true })
-  }
-
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+    if (currentUser) {
+      console.log('current user logged in: ' + currentUser)
+    } else {
+      console.log('current user logged in: BLANK;');
     }
 
-    const { currentUser } = this.state;
+  }, [currentUser]);
 
-    return (
-      <div className="container">
-        {(this.state.userReady) ?
-          <div className="temp-user-data">
-            <header className="p-10 bg-slate-600">
-              <h3>
-                <strong>{currentUser.username}</strong> Profile
-              </h3>
-            </header>
-            <p>
-              <strong>Token:</strong>{" "}
-              {currentUser.accessToken.substring(0, 20)} ...{" "}
-              {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-            </p>
-            <p>
-              <strong>Id:</strong>{" "}
-              {currentUser.id}
-            </p>
-            <p>
-              <strong>Email:</strong>{" "}
-              {currentUser.email}
-            </p>
-            <strong>User Type:</strong>
-            <ul>
-              {currentUser.roles &&
-                currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-            </ul>
-          </div> : null}
+  return (
+    <div className="container flex py-16 px-16 flex-col gap-10 text-lg m-auto max-w-lg">
+      <header className="temp-profile-content">
+        <h3>
+          Temoprary view for current user check. <br/> This Will be deleted once dashboard development starts
+        </h3>
+      </header>
+      <p>
+        <strong>Email: </strong> 
+        {currentUser}
+      </p>
+      <div>
+        <strong>Roles: </strong>
+        <ul>
+          {/* {currentUser.user.roles &&
+            currentUser.user.roles.map((role: any, index: number) => {
+              return <li key={index}>{role.code}</li>
+            })} */}
+        </ul>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Profile;

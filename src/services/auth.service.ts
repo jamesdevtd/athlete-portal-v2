@@ -1,42 +1,38 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3020/api/auth/";
+const API_URL = "http://localhost:8080/api/user/";
 
-class AuthService {
-  login(username: string, password: string) {
-    return axios
-      .post(API_URL + "signin", {
-        username,
-        password
-      })
-      .then(response => {
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
+export const signup = ( email: string, password: string ) => {
+  return axios.post(API_URL + "signup", {
+    email: email,
+    password: password
+  });
+};
 
-        return response.data;
-      });
-  }
-
-  logout() {
-    localStorage.removeItem("user");
-  }
-
-  signUp(firstname: string, lastname: string, email: string, password: string) {
-    return axios.post(API_URL + "signup", {
-      firstname,
-      lastname,
+export const login = (email: string, password: string) => {
+  return axios
+    .post(API_URL + "sign-in", {
       email,
-      password
-    });
-  }
+      password,
+    })
+    .then((response) => {
+      console.log('signin Sucess RESPONSE: ' + response);
+      if (response.data.authToken) {
+        // THIS is temporary: token will be stored in memory after testing
+        // localStorage.setItem("user", JSON.stringify(response.data));
+      }
+      return response.data;
+    })
+};
 
-  getCurrentUser() {
-    const userStr = localStorage.getItem("user");
-    if (userStr) return JSON.parse(userStr);
+export const logout = () => {
+  localStorage.removeItem("user");
+};
 
-    return null;
-  }
-}
+// export const getCurrentUser = () => {
+//   const userStr = localStorage.getItem("user");
+//   if (userStr) return JSON.parse(userStr);
 
-export default new AuthService();
+//   return null;
+// };
+

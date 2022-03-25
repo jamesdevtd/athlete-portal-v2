@@ -6,6 +6,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Blinker:wght@600;700&display=swap');
 
+@import './forms/affiliate/signup-steps/signup-steps.css';
+@import './forms/affiliate/signup-steps/BottomButtons.css';
+@import './forms/affiliate/signup-steps/StepsButtons.css';
+
 body {
   margin: 0;
   @apply font-body text-xs;
@@ -22,84 +26,16 @@ body {
   @apply mx-auto w-full;
   max-width: 140px;
 }
+
+.btn.grey {
+  background: rgb(119,119,119);
+  background: linear-gradient(177deg, rgba(119,119,119,1) 0%, rgba(85,85,85,1) 87%);
+}
 .anchor {
   @apply font-bold underline text-blue-brand;
 }
 
-.form-wrap {
-  max-width: 260px;
-}
 
-.forms-nav ul {
-  @apply flex justify-center gap-3 border-b-2;
-}
-
-.forms-nav ul li {
-  @apply block uppercase opacity-50 px-1 pb-1 relative font-title;
-}
-
-.forms-nav ul li.active {
-  @apply opacity-100 text-blue-dark font-bold;
-}
-
-.forms-nav ul li.active:after {
-  content: "";
-  @apply block w-full bg-blue-dark absolute left-0 bottom-0;
-  height: 4px;
-  border-radius: 3px 3px 0 0;
-}
-
-.forms-nav a {
-  @apply font-semibold;
-}
-
-.form-group {
-  @apply flex flex-col gap-2;
-}
-
-.form-group label {
-  @apply text-gray-600 text-xs m-0;
-}
-
-.form-group label > span {
-  @apply text-orange-500;
-}
-
-.form-group input {
-  @apply rounded-sm focus:outline-none focus:border-none focus:ring-1 focus:border-blue-900 text-sm p-2;
-}
-
-.form-group .alert {
-  @apply text-xs text-orange-500;
-}
-
-.form-group.pw {
-  @apply relative;
-}
-
-.pw-toggle {
-  @apply absolute;
-  top: 35px;
-  right: 13px;
-  text-indent: -9999px;
-  font-size: 1px;
-  width: 18px;
-  height: 18px;
-  opacity: .8;
-  background-image: url(../public/assets/images/pw-visible.svg);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.pw-shown .pw-toggle {
-  background-image: url(../public/assets/images/pw-hide.svg);
-}
-
-.form-group.note {
-  @apply text-gray-600;
-  font-size: 9px;
-}
 
 .social-logins {
   @apply flex flex-col gap-3;
